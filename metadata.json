@@ -1,0 +1,6 @@
+{
+  "name": "KrishiNet: Precision Agro-Agent",
+  "description": "Model-based reflex agent system with real-time CCTV crop stress vision, 5-sensor telemetry, Kalman filtering, Q-Learning & MDP decision optimization, 7-day predictive yield regression forecasting, and Indian farming MQTT edge gateway integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
