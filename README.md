@@ -1,5 +1,9 @@
 # KrishiNet
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)](https://www.typescriptlang.org/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/REKTRONIX/KrishiNet)](https://github.com/REKTRONIX/KrishiNet/commits/main)
+
 Model Based Reflex Agent for Precision Sustainable Agriculture.
 
 This repository contains a TypeScript implementation of a model-based reflex agent for precision agriculture, a simple R simulation, and utility components used for visualization.
