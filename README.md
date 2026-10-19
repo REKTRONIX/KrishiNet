@@ -22,3 +22,7 @@ Quickstart
 R simulation
 
 Open `krishinet_agro_agent.R` in R or RStudio and run the `run_krishinet_simulation()` function to run a basic simulation.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
