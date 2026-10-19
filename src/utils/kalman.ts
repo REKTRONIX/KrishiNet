@@ -16,52 +16,26 @@ export class SingleKalmanFilter {
     this.measurementNoise = r;
   }
 
-  public update(measurement: number, groundTruth: number = measurement): number {
-    // 1. Time Update (Predict)
-    // For scalar random walk / slow dynamic soil:
-    const predictedEstimate = this.estimate;
-    const predictedError = this.estimateError + this.processNoise;
+  public update(measurement: number, trueVal: number = NaN, timestamp: number = Date.now()): number {
+    // predict step (estimate remains same for scalar stationary model)
+    this.estimateError = this.estimateError + this.processNoise;
 
-    // 2. Measurement Update (Correct)
-    this.kalmanGain = predictedError / (predictedError + this.measurementNoise);
-    this.estimate = predictedEstimate + this.kalmanGain * (measurement - predictedEstimate);
-    this.estimateError = (1 - this.kalmanGain) * predictedError;
+    // update step
+    this.kalmanGain = this.estimateError / (this.estimateError + this.measurementNoise);
+    this.estimate = this.estimate + this.kalmanGain * (measurement - this.estimate);
+    this.estimateError = (1 - this.kalmanGain) * this.estimateError;
 
-    // 3. Keep circular history buffer
-    this.history.push({
-      time: Date.now(),
-      raw: Number(measurement.toFixed(2)),
-      filtered: Number(this.estimate.toFixed(2)),
-      trueVal: Number(groundTruth.toFixed(2)),
-    });
-
-    if (this.history.length > this.maxHistory) {
-      this.history.shift();
-    }
+    this.history.push({ time: timestamp, raw: measurement, filtered: this.estimate, trueVal });
+    if (this.history.length > this.maxHistory) this.history.shift();
 
     return this.estimate;
   }
 
-  public setNoiseParameters(q: number, r: number) {
-    this.processNoise = Math.max(0.001, q);
-    this.measurementNoise = Math.max(0.01, r);
-  }
-
   public getState(): KalmanState {
-    return {
-      raw: this.history.length > 0 ? this.history[this.history.length - 1].raw : this.estimate,
-      filtered: Number(this.estimate.toFixed(2)),
-      estimateError: Number(this.estimateError.toFixed(4)),
-      kalmanGain: Number(this.kalmanGain.toFixed(4)),
-      processNoise: this.processNoise,
-      measurementNoise: this.measurementNoise,
-      history: [...this.history],
-    };
+    return { estimate: this.estimate, estimateError: this.estimateError };
   }
 
-  public reset(value: number) {
-    this.estimate = value;
-    this.estimateError = 1.0;
-    this.history = [];
+  public getHistory() {
+    return this.history.slice();
   }
 }
