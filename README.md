@@ -4,6 +4,10 @@ Model Based Reflex Agent for Precision Sustainable Agriculture.
 
 This repository contains a TypeScript implementation of a model-based reflex agent for precision agriculture, a simple R simulation, and utility components used for visualization.
 
+Live demo / AI Studio project
+
+- Google AI Studio app: https://krishinet-precision-agro-agent.ai.studio
+
 Quickstart
 
 - Node 18+ recommended
