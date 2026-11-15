@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = process.env.NODE_ENV === "production" ? (Number(process.env.PORT) || 3000) : 3000;
 
 app.use(express.json({ limit: "15mb" }));
 
@@ -658,21 +658,12 @@ async function startServer() {
     });
   }
 
-  const primaryServer = app.listen(PORT, "0.0.0.0", () => {
+  const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`KrishiNet Precision Agro-Agent Server running on port ${PORT}`);
   });
-  primaryServer.on("error", (err: any) => {
-    console.error(`Primary server error on port ${PORT}:`, err?.message || err);
+  server.on("error", (err: any) => {
+    console.error(`KrishiNet server error on port ${PORT}:`, err?.message || err);
   });
-
-  if (PORT !== 3000) {
-    const secondaryServer = app.listen(3000, "0.0.0.0", () => {
-      console.log(`KrishiNet local dev fallback active on port 3000`);
-    });
-    secondaryServer.on("error", (err: any) => {
-      console.warn(`Secondary port 3000 listener notice:`, err?.message || err);
-    });
-  }
 }
 
 startServer().catch((err) => {
